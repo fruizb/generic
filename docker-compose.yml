@@ -1,0 +1,37 @@
+version: '2'
+services:
+ wildfly:
+    build:
+     context: config
+     dockerfile: Dockerfile
+    restart: always
+    ports:
+     - "8080:8080"
+    image: wildfly
+    command: '/opt/server/bin/standalone.sh -b 0.0.0.0'
+    volumes:
+     - $PWD/wildfly_deployments:/opt/server/standalone/deployments
+
+ jboss:
+    build:
+     context: config
+     dockerfile: Dockerfile
+    restart: always
+    ports:
+     - "8081:8080"
+    image: jboss
+    command: '/opt/server/bin/standalone.sh -b 0.0.0.0'
+    volumes:
+     - $PWD/jboss_deployments:/opt/server/standalone/deployments
+
+ tomcat:
+    build:
+     context: config
+     dockerfile: Dockerfile
+    restart: always
+    ports:
+     - "8082:8080"
+    image: tomcat
+    command: '/opt/server/bin/catalina.sh run -b 0.0.0.0'
+    volumes:
+     - $PWD/tomcat_webapps:/opt/server/webapps
